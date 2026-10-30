@@ -1,0 +1,22 @@
+{
+  "name": "libraflow-library-management",
+  "version": "1.0.0",
+  "description": "A MongoDB-backed college library management and book circulation system.",
+  "main": "backend/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js",
+    "seed": "node backend/server.js --seed",
+    "test": "node backend/server.js --test",
+    "backup": "node backend/server.js --backup",
+    "restore": "node backend/server.js --restore"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.12.0"
+  }
+}

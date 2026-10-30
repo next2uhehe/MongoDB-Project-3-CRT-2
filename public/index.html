@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#172554" />
+  <meta name="description" content="LibraFlow is a modern college library catalogue, circulation and member self-service portal." />
+  <title>LibraFlow | College Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <section id="loginView" class="login-screen">
+    <div class="login-visual">
+      <a class="brand brand-on-dark" href="/" aria-label="LibraFlow home">
+        <span class="brand-mark">L</span><span>LibraFlow</span>
+      </a>
+      <div class="visual-orbit orbit-a"></div>
+      <div class="visual-orbit orbit-b"></div>
+      <div class="visual-content">
+        <span class="eyebrow eyebrow-light">COLLEGE LIBRARY PORTAL</span>
+        <h1>A better way<br />to discover, borrow<br />and read.</h1>
+        <p>One secure place for the library catalogue, book circulation and your personal borrowing history.</p>
+        <div class="visual-points">
+          <span><i class="point-dot"></i> Live catalogue</span>
+          <span><i class="point-dot"></i> Clear due dates</span>
+          <span><i class="point-dot"></i> Personal loan history</span>
+        </div>
+      </div>
+      <div class="visual-footer">LIBRAFLOW <span>·</span> ACADEMIC LIBRARY SERVICES</div>
+    </div>
+
+    <div class="login-side">
+      <div class="login-side-top">
+        <span class="secure-label"><span class="secure-dot"></span> SECURE INSTITUTIONAL ACCESS</span>
+      </div>
+      <div class="login-card-wrap">
+        <div class="login-card">
+          <div class="login-icon"><span class="brand-mark">L</span></div>
+          <span class="eyebrow">WELCOME</span>
+          <h2>Sign in to LibraFlow</h2>
+          <p class="login-description">Use the account provided by your library administration.</p>
+          <form id="loginForm" class="form-stack" autocomplete="on">
+            <label for="loginEmail">Institutional email
+              <input id="loginEmail" type="email" name="email" autocomplete="username" placeholder="name@institution.edu" maxlength="180" required />
+            </label>
+            <label for="loginPassword">Password
+              <div class="password-field">
+                <input id="loginPassword" type="password" name="password" autocomplete="current-password" placeholder="Enter your password" required />
+                <button id="toggleLoginPassword" class="password-toggle" type="button" aria-label="Show password">Show</button>
+              </div>
+            </label>
+            <button class="btn btn-primary btn-full btn-large" type="submit">Sign in <span aria-hidden="true">→</span></button>
+            <p id="loginMessage" class="form-message" role="status" aria-live="polite"></p>
+          </form>
+          <div class="login-help"><span class="help-lock">⌑</span><span>Need access or a password reset? Contact your library administrator.</span></div>
+        </div>
+      </div>
+      <div class="login-side-footer"><span>© 2026 LibraFlow</span><span>Official library portal</span></div>
+    </div>
+  </section>
+
+  <div id="appView" class="app-shell hidden">
+    <header class="app-header">
+      <div class="header-main">
+        <a class="brand header-brand" href="/" data-home aria-label="Go to LibraFlow home">
+          <span class="brand-mark">L</span>
+          <span class="brand-name">LibraFlow</span>
+          <span class="brand-divider"></span>
+          <span class="brand-context">COLLEGE LIBRARY</span>
+        </a>
+        <div class="header-actions">
+          <span class="today-pill" id="todayLabel">Today</span>
+          <div class="user-identity">
+            <div class="avatar" id="userAvatar">U</div>
+            <div class="identity-copy"><strong id="userName">Library User</strong><small id="userRole">Member</small></div>
+          </div>
+          <button id="changePasswordBtn" class="btn btn-outline btn-sm" type="button">Security</button>
+          <button id="logoutBtn" class="btn btn-quiet btn-sm" type="button">Sign out <span aria-hidden="true">↗</span></button>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <div class="nav-group nav-staff" data-role="staff">
+          <button class="nav-link active" data-page="dashboard" type="button">Overview</button>
+          <button class="nav-link" data-page="books" type="button">Catalogue <span class="nav-count" id="navBooks">—</span></button>
+          <button class="nav-link" data-page="members" type="button">Members</button>
+          <button class="nav-link" data-page="circulation" type="button">Issue &amp; return</button>
+          <button class="nav-link" data-page="reservations" type="button">Reservations</button>
+          <button class="nav-link" data-page="reports" type="button">Reports &amp; insights</button>
+        </div>
+        <div class="nav-group nav-member hidden" data-role="member">
+          <button class="nav-link" data-page="books" type="button">Book catalogue</button>
+          <button class="nav-link active" data-page="my-library" type="button">My library</button>
+          <button class="nav-link" data-page="my-loans" type="button">My loans</button>
+          <button class="nav-link" data-page="my-reservations" type="button">My reservations</button>
+        </div>
+        <div class="nav-status"><span class="status-dot"></span> Library services online</div>
+      </nav>
+    </header>
+
+    <main class="main-area">
+      <div class="page-heading">
+        <div>
+          <div class="breadcrumb">LIBRARY SERVICES <span>/</span> <b id="breadcrumbPage">Overview</b></div>
+          <h1 id="pageTitle">Library overview</h1>
+          <p id="pageSubtitle">A clear view of your library activity.</p>
+        </div>
+        <div class="page-heading-actions">
+          <button class="btn btn-primary" id="quickAddBook" data-role="staff" type="button">＋ Add a book</button>
+        </div>
+      </div>
+
+      <section id="page-dashboard" class="page active-page" data-role="staff">
+        <div class="welcome-row">
+          <div><span class="eyebrow">LIBRARY AT A GLANCE</span><h2>Your collection, in focus.</h2><p class="muted">Monitor the catalogue, memberships and circulation from one workspace.</p></div>
+          <div class="welcome-badge"><span class="pulse-dot"></span> Connected to library database</div>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card stat-blue"><div class="stat-top"><span>Book titles</span><span class="stat-icon">▤</span></div><strong id="statBooks">—</strong><small>Unique titles in catalogue</small></article>
+          <article class="stat-card stat-violet"><div class="stat-top"><span>Active members</span><span class="stat-icon">♙</span></div><strong id="statMembers">—</strong><small>Registered borrowers</small></article>
+          <article class="stat-card stat-teal"><div class="stat-top"><span>Books on loan</span><span class="stat-icon">⇄</span></div><strong id="statLoans">—</strong><small>Currently issued copies</small></article>
+          <article class="stat-card stat-amber"><div class="stat-top"><span>Overdue loans</span><span class="stat-icon">◷</span></div><strong id="statOverdue">—</strong><small>Need return follow-up</small></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel"><div class="panel-heading"><div><h3>Collection by category</h3><p class="muted">Distribution of book titles</p></div><span class="panel-symbol">▥</span></div><div id="categoryChart" class="category-chart"><div class="empty-state">Loading category data…</div></div></article>
+          <article class="panel"><div class="panel-heading"><div><h3>Most borrowed books</h3><p class="muted">Based on circulation history</p></div><button class="text-button" data-goto="reports" type="button">View reports →</button></div><div id="popularBooks" class="popular-list"><div class="empty-state">Loading…</div></div></article>
+        </div>
+        <article class="panel table-panel"><div class="panel-heading"><div><h3>Recent circulation</h3><p class="muted">Latest issues and returns</p></div><button class="text-button" data-goto="circulation" type="button">Open loan register →</button></div><div class="table-wrap"><table><thead><tr><th>Book</th><th>Member</th><th>Issue date</th><th>Due date</th><th>Status</th></tr></thead><tbody id="recentTransactions"><tr><td colspan="5" class="empty-cell">Loading recent activity…</td></tr></tbody></table></div></article>
+      </section>
+
+      <section id="page-books" class="page">
+        <div class="page-intro"><div><h2>Book catalogue</h2><p class="muted">Search the collection by title, author, ISBN or category.</p></div><button class="btn btn-primary" id="addBookBtn" data-role="staff" type="button">＋ Add new book</button></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="bookSearch" type="search" placeholder="Search title, author or ISBN…" /></div><select id="bookCategory" aria-label="Filter by category"><option value="All">All categories</option></select><span class="toolbar-count" id="bookCount">0 books</span></div>
+        <div id="bookFormWrap" class="panel form-panel hidden" data-role="staff"><div class="panel-heading"><div><h3 id="bookFormTitle">Add a book</h3><p class="muted">ISBN must be unique in the catalogue.</p></div><button class="icon-button" data-close="bookFormWrap" type="button" aria-label="Close form">×</button></div><form id="bookForm" class="form-grid"><input type="hidden" id="bookEditId" /><label>ISBN *<input id="bookIsbn" required maxlength="17" placeholder="ISBN number" /></label><label>Book title *<input id="bookTitle" required maxlength="160" /></label><label>Author *<input id="bookAuthor" required maxlength="140" /></label><label>Category *<select id="bookCategoryInput" required><option value="">Select category</option><option>Programming</option><option>Computer Science</option><option>Database</option><option>Software Engineering</option><option>Artificial Intelligence</option><option>Mathematics</option><option>Electronics</option><option>General</option></select></label><label>Publisher<input id="bookPublisher" maxlength="120" /></label><label>Shelf / Rack<input id="bookShelf" maxlength="40" placeholder="A-01" /></label><label>Total copies *<input id="bookCopies" type="number" min="1" max="10000" required /></label><label class="full-field">Description<textarea id="bookDescription" rows="2" maxlength="500"></textarea></label><div class="form-actions full-field"><button type="button" class="btn btn-ghost" data-close="bookFormWrap">Cancel</button><button class="btn btn-primary" type="submit">Save book</button></div></form><p id="bookFormMessage" class="form-message"></p></div>
+        <article class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>Book</th><th>ISBN</th><th>Category</th><th>Shelf</th><th>Copies</th><th>Availability</th><th>Actions</th></tr></thead><tbody id="booksTable"><tr><td colspan="7" class="empty-cell">Loading catalogue…</td></tr></tbody></table></div></article>
+      </section>
+
+      <section id="page-members" class="page" data-role="staff">
+        <div class="page-intro"><div><h2>Library members</h2><p class="muted">Manage membership records and secure portal access.</p></div><button class="btn btn-primary" id="addMemberBtn" type="button">＋ Register member</button></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="memberSearch" type="search" placeholder="Search name, member ID or email…" /></div><span class="toolbar-count" id="memberCount">0 members</span></div>
+        <div id="memberFormWrap" class="panel form-panel hidden"><div class="panel-heading"><div><h3 id="memberFormTitle">Register a member</h3><p class="muted">Set the member's first portal password. Passwords are never displayed again.</p></div><button class="icon-button" data-close="memberFormWrap" type="button" aria-label="Close form">×</button></div><form id="memberForm" class="form-grid"><input type="hidden" id="memberEditId" /><label>Member ID *<input id="memberCode" required maxlength="32" placeholder="Institutional member ID" /></label><label>Full name *<input id="memberName" required maxlength="120" /></label><label>Email *<input id="memberEmail" type="email" required maxlength="180" /></label><label>Phone<input id="memberPhone" maxlength="25" /></label><label>Branch / Department<input id="memberBranch" maxlength="100" placeholder="Department" /></label><label>Semester<input id="memberSemester" type="number" min="1" max="8" placeholder="1–8" /></label><label id="memberPasswordLabel">Initial portal password *<input id="memberPassword" type="password" minlength="12" maxlength="128" autocomplete="new-password" placeholder="At least 12 characters" required /></label><label id="memberStatusWrap" class="hidden">Membership status<select id="memberStatus"><option>Active</option><option>Inactive</option></select></label><div class="form-actions full-field"><button type="button" class="btn btn-ghost" data-close="memberFormWrap">Cancel</button><button class="btn btn-primary" type="submit">Save member</button></div></form><p id="memberFormMessage" class="form-message"></p></div>
+        <article class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>Member</th><th>Member ID</th><th>Branch</th><th>Semester</th><th>Portal access</th><th>Status</th><th>Actions</th></tr></thead><tbody id="membersTable"><tr><td colspan="7" class="empty-cell">Loading members…</td></tr></tbody></table></div></article>
+      </section>
+
+      <section id="page-circulation" class="page" data-role="staff">
+        <div class="page-intro"><div><h2>Issue &amp; return desk</h2><p class="muted">Manage book loans, due dates and late-return fines.</p></div><button class="btn btn-outline" id="showReserveFromDesk" type="button">View reservations</button></div>
+        <div class="circulation-layout"><article class="panel issue-panel"><div class="panel-heading"><div><h3>Issue a book</h3><p class="muted">Standard loan period: <strong id="loanDaysLabel">14</strong> days.</p></div><span class="panel-symbol">↗</span></div><form id="issueForm" class="form-stack"><label>Book<select id="issueBook" required><option value="">Choose an available book</option></select></label><label>Member<select id="issueMember" required><option value="">Choose a member</option></select></label><label>Due date<input id="issueDueDate" type="date" /></label><button class="btn btn-primary btn-full" type="submit">Confirm issue →</button><p id="issueMessage" class="form-message"></p></form><div class="fine-note"><span>₹</span><p><strong>Late return policy</strong><small>Fine is calculated automatically using the configured per-day rate.</small></p></div></article><article class="panel circulation-info"><h3>Circulation at a glance</h3><div class="mini-stat-row"><span>Available copies</span><strong id="availableCopies">—</strong></div><div class="mini-stat-row"><span>Active loans</span><strong id="activeLoans">—</strong></div><div class="mini-stat-row"><span>Overdue loans</span><strong id="overdueLoans">—</strong></div><div class="mini-stat-row"><span>Fine per day</span><strong id="fineRate">—</strong></div><p class="muted small-note">When a copy is returned, the oldest waiting reservation can be made ready for pickup.</p></article></div>
+        <article class="panel table-panel"><div class="panel-heading"><div><h3>Loan register</h3><p class="muted">Active and returned transactions</p></div><select id="transactionFilter" class="compact-select"><option value="All">All transactions</option><option value="Issued">Currently issued</option><option value="Returned">Returned</option></select></div><div class="table-wrap"><table><thead><tr><th>Book</th><th>Member</th><th>Issued</th><th>Due date</th><th>Returned</th><th>Fine</th><th>Status</th><th>Action</th></tr></thead><tbody id="transactionsTable"><tr><td colspan="8" class="empty-cell">Loading transactions…</td></tr></tbody></table></div></article>
+      </section>
+
+      <section id="page-reservations" class="page" data-role="staff">
+        <div class="page-intro"><div><h2>Reservations &amp; waitlist</h2><p class="muted">Manage requests for titles with no available copies.</p></div></div>
+        <div class="circulation-layout"><article class="panel issue-panel"><div class="panel-heading"><div><h3>Create reservation</h3><p class="muted">Only unavailable titles can be reserved.</p></div><span class="panel-symbol">◷</span></div><form id="reservationForm" class="form-stack"><label>Book<select id="reservationBook" required><option value="">Choose an unavailable book</option></select></label><label>Member<select id="reservationMember" required><option value="">Choose a member</option></select></label><button class="btn btn-primary btn-full" type="submit">Join reservation queue</button><p id="reservationMessage" class="form-message"></p></form></article><article class="panel circulation-info"><h3>Reservation process</h3><ol class="steps-list"><li>A member joins the queue when all copies are issued.</li><li>When a copy is returned, the oldest waiting request becomes ready.</li><li>The member has two days to collect the reserved copy.</li><li>Issue the book to complete the reservation.</li></ol></article></div>
+        <article class="panel table-panel"><div class="panel-heading"><div><h3>Active reservation queue</h3><p class="muted">Waiting and ready-for-pickup requests</p></div></div><div class="table-wrap"><table><thead><tr><th>Book</th><th>Member</th><th>Member ID</th><th>Requested</th><th>Pickup by</th><th>Status</th><th>Action</th></tr></thead><tbody id="reservationsTable"><tr><td colspan="7" class="empty-cell">Loading reservations…</td></tr></tbody></table></div></article>
+      </section>
+
+      <section id="page-reports" class="page" data-role="staff">
+        <div class="page-intro"><div><h2>Reports &amp; insights</h2><p class="muted">Understand circulation, borrowing patterns and fine collection.</p></div><a class="btn btn-outline" href="/api/reports/export.csv" id="exportCsv">↓ Export transaction CSV</a></div>
+        <div class="stats-grid report-stats"><article class="stat-card stat-blue"><div class="stat-top"><span>Total fines</span><span class="stat-icon">₹</span></div><strong id="reportFineTotal">₹0</strong><small>Recorded late-return fines</small></article><article class="stat-card stat-teal"><div class="stat-top"><span>Fines collected</span><span class="stat-icon">✓</span></div><strong id="reportFinePaid">₹0</strong><small>Marked as paid</small></article><article class="stat-card stat-amber"><div class="stat-top"><span>Unpaid cases</span><span class="stat-icon">!</span></div><strong id="reportUnpaid">0</strong><small>Require follow-up</small></article><article class="stat-card stat-violet"><div class="stat-top"><span>Most borrowed</span><span class="stat-icon">★</span></div><strong id="reportTopBook" class="small-stat-text">—</strong><small>Based on issue history</small></article></div>
+        <div class="dashboard-grid"><article class="panel"><div class="panel-heading"><div><h3>Monthly circulation</h3><p class="muted">Issues over the last six months</p></div></div><div id="monthlyChart" class="monthly-chart"><div class="empty-state">Loading…</div></div></article><article class="panel"><div class="panel-heading"><div><h3>Category breakdown</h3><p class="muted">Titles and total copies</p></div></div><div id="reportCategories" class="report-category-list"><div class="empty-state">Loading…</div></div></article></div>
+        <div class="dashboard-grid"><article class="panel"><div class="panel-heading"><div><h3>Frequent borrowers</h3><p class="muted">Members with the highest number of loans</p></div></div><div id="topMembers" class="popular-list"><div class="empty-state">Loading…</div></div></article><article class="panel"><div class="panel-heading"><div><h3>Database administration</h3><p class="muted">Indexes, query plans, replication and backups</p></div></div><div class="health-actions"><button class="btn btn-outline btn-full" id="checkIndexes" type="button">Inspect indexes &amp; query plan</button><button class="btn btn-outline btn-full" id="checkReplication" type="button">Check replication status</button><button class="btn btn-outline btn-full" id="backupBtn" type="button">Create JSON backup</button></div><pre id="systemOutput" class="system-output">Choose a database action to view its result.</pre></article></div>
+      </section>
+
+      <section id="page-my-library" class="page" data-role="member">
+        <div class="welcome-row member-welcome"><div><span class="eyebrow">YOUR LIBRARY ACCOUNT</span><h2 id="myMemberName">Welcome back.</h2><p class="muted">A private overview of your borrowing activity and account status.</p></div><span class="member-code-pill" id="myMemberCode">Member account</span></div>
+        <div class="stats-grid member-stats"><article class="stat-card stat-blue"><div class="stat-top"><span>Currently borrowed</span><span class="stat-icon">▤</span></div><strong id="myActiveLoans">—</strong><small>Books not yet returned</small></article><article class="stat-card stat-violet"><div class="stat-top"><span>Due soon</span><span class="stat-icon">◷</span></div><strong id="myDueSoon">—</strong><small>Due within three days</small></article><article class="stat-card stat-amber"><div class="stat-top"><span>Outstanding fine</span><span class="stat-icon">₹</span></div><strong id="myOutstandingFine">—</strong><small>Current or recorded amount</small></article><article class="stat-card stat-teal"><div class="stat-top"><span>Books returned</span><span class="stat-icon">✓</span></div><strong id="myReturnedLoans">—</strong><small>Completed loan history</small></article></div>
+        <article class="panel table-panel"><div class="panel-heading"><div><h3>Your current loans</h3><p class="muted">Keep an eye on due dates and any estimated late fee.</p></div><button class="text-button" data-goto="my-loans" type="button">Full borrowing history →</button></div><div class="table-wrap"><table><thead><tr><th>Book</th><th>Issued on</th><th>Due date</th><th>Fine</th><th>Status</th></tr></thead><tbody id="myLoanPreview"><tr><td colspan="5" class="empty-cell">Loading your loans…</td></tr></tbody></table></div></article>
+        <div class="member-note"><span class="note-icon">i</span><p><strong>Your information is private.</strong><small>This page shows only loans and reservations linked to your own library account.</small></p></div>
+      </section>
+
+      <section id="page-my-loans" class="page" data-role="member">
+        <div class="page-intro"><div><h2>My borrowing history</h2><p class="muted">Every book issued to your account, including returned books, due dates and fines.</p></div></div>
+        <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>Book</th><th>Issued on</th><th>Due date</th><th>Returned on</th><th>Fine</th><th>Payment status</th><th>Loan status</th></tr></thead><tbody id="myLoansTable"><tr><td colspan="7" class="empty-cell">Loading your borrowing history…</td></tr></tbody></table></div></div>
+      </section>
+
+      <section id="page-my-reservations" class="page" data-role="member">
+        <div class="page-intro"><div><h2>My reservations</h2><p class="muted">Follow the status of books you have requested.</p></div></div>
+        <article class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>Book</th><th>Requested on</th><th>Queue status</th><th>Pickup deadline</th><th>Action</th></tr></thead><tbody id="myReservationsTable"><tr><td colspan="5" class="empty-cell">Loading your reservations…</td></tr></tbody></table></div></article>
+      </section>
+
+      <footer class="main-footer"><span>LibraFlow · College Library Management</span><span>Secure catalogue and circulation services</span></footer>
+    </main>
+  </div>
+
+  <dialog id="passwordDialog" class="modal-dialog">
+    <form id="changePasswordForm" class="modal-card" method="dialog">
+      <div class="panel-heading"><div><span class="eyebrow">ACCOUNT SECURITY</span><h3>Change password</h3><p class="muted">Use a strong password of at least 12 characters.</p></div><button class="icon-button" type="button" data-close-dialog="passwordDialog" aria-label="Close">×</button></div>
+      <label>Current password<input id="currentPassword" type="password" autocomplete="current-password" required /></label>
+      <label>New password<input id="newPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128" required /></label>
+      <label>Confirm new password<input id="confirmPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128" required /></label>
+      <p id="changePasswordMessage" class="form-message" role="status"></p>
+      <div class="form-actions"><button class="btn btn-ghost" type="button" data-close-dialog="passwordDialog">Cancel</button><button class="btn btn-primary" type="submit">Update password</button></div>
+    </form>
+  </dialog>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+</body>
+</html>
